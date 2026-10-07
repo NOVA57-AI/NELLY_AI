@@ -95,7 +95,7 @@ function speak(text,lang){
   u.onstart=()=>setState('SPEAKING',lang==='es'?'RESPONDIENDO EN ESPAÑOL · LATAM':'RESPONDING IN ENGLISH');
   u.onend=()=>setState('READY','SPEAK OR TYPE TO NELLY');
   window.speechSynthesis.speak(u);
-}
+
 async function send(){
   const input=document.getElementById('input');
   const text=input.value.trim();
