@@ -77,6 +77,12 @@ function detectLanguage(text){
   return es.test(text)?'es':'en';
 }
 let lastLanguage='en';
+  document.getElementById('input').addEventListener('keydown', function(event){
+  if(event.key === 'Enter'){
+    event.preventDefault();
+    send();
+  }
+});
 function setLanguage(lang){
   lastLanguage=lang;
   document.getElementById('langStatus').textContent=lang==='es'?'ES · LATAM':'EN · US';
