@@ -96,7 +96,49 @@ function speak(text,lang){
   u.onend=()=>setState('READY','SPEAK OR TYPE TO NELLY');
   window.speechSynthesis.speak(u);
 }
-function send(){
+async function send(){
+  const input=document.getElementById('input');
+  const text=input.value.trim();
+  if(!text)return;
+
+  const lang=detectLanguage(text);
+  setLanguage(lang);
+  addMsg('YOU',text);
+  input.value='';
+  setState('THINKING',lang==='es'?'PROCESANDO TU SOLICITUD':'PROCESSING YOUR REQUEST');
+
+  try{
+    const response=await fetch('https://nelly-backend.vercel.app/api/chat',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({
+        message:text
+      })
+    });
+
+    const data=await response.json();
+
+    if(!response.ok){
+      throw new Error(data.error || 'Backend request failed');
+    }
+
+    const reply=data.reply || 'I received your message, but I did not get a response.';
+
+    addMsg('NELLY',reply);
+    speak(reply,lang);
+
+  }catch(error){
+    console.error('NELLY connection error:',error);
+
+    const reply=lang==='es'
+      ? 'Lo siento. No pude conectarme con mi sistema de inteligencia. Inténtalo de nuevo.'
+      : 'Sorry. I could not connect to my intelligence system. Please try again.';
+
+    addMsg('NELLY',reply);
+    speak(reply,lang);
+    setState('READY','CONNECTION ERROR — TRY AGAIN');
+  }
+}
   const input=document.getElementById('input');const text=input.value.trim();if(!text)return;
   const lang=detectLanguage(text);setLanguage(lang);addMsg('YOU',text);input.value='';setState('THINKING',lang==='es'?'PROCESANDO TU SOLICITUD':'PROCESSING YOUR REQUEST');
   setTimeout(()=>{
