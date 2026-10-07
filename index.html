@@ -89,8 +89,12 @@ function speak(text,lang){
 
   // Remove URLs so NELLY does not read long web addresses aloud
   const spokenText = text
-    .replace(/https?:\/\/\S+/gi,'')
-    .replace(/www\.\S+/gi,'')
+    .replace(/https?:\/\/[^\s)]+/gi,'')
+    .replace(/https?:\/\//gi,'')
+    .replace(/www\.[^\s)]+/gi,'')
+    .replace(/\*\*/g,'')
+    .replace(/\*/g,'')
+    .replace(/#{1,6}\s?/g,'')
     .replace(/\s{2,}/g,' ')
     .trim();
 
