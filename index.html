@@ -202,5 +202,5 @@ async function send(){
 }
 ```
 
-{document.getElementById('clock').textContent=new Date().toLocaleTimeString([], {hour:'2-digit',minute:'2-digit',second:'2-digit'})}tick();setInterval(tick,1000);if('speechSynthesis'in window){window.speechSynthesis.getVoices();window.speechSynthesis.onvoiceschanged=()=>window.speechSynthesis.getVoices();}
+function tick(){ document.getElementById('clock').textContent = new Date().toLocaleTimeString([], { hour:'2-digit', minute:'2-digit', second:'2-digit' }); } tick(); setInterval(tick,1000); if('speechSynthesis' in window){ window.speechSynthesis.getVoices(); window.speechSynthesis.onvoiceschanged=()=>{ window.speechSynthesis.getVoices(); }; }
 </script></body></html>
