@@ -55,69 +55,7 @@ main{display:flex;flex-direction:column;min-width:0}.top{height:65px;border-bott
   <div class="panel"><div class="panel-title">RECENT CONTEXT</div><div class="chat" id="chat"><div class="msg"><div class="tag">NELLY</div>Hello. I'm ready.</div></div></div>
 </aside>
 </div>
-<script>
-const wave=document.getElementById('wave');for(let i=0;i<42;i++){const b=document.createElement('i');b.className='bar';wave.appendChild(b)}
-const data={
-chat:['CONVERSATION','A natural space to talk with NELLY, continue context, and ask follow-up questions.',['Voice-first conversation','English ↔ Español','Context-aware follow-ups']],
-create:['CREATE','Turn ideas into writing, code, plans, presentations, concepts, and more.',['Writing & editing','Ideas & planning','Code & projects']],
-fitness:['FITNESS','Build workouts, understand exercises, organize training, and stay consistent.',['Workout planning','Exercise guidance','Progress & routines']],
-learn:['LEARN','Get explanations, study support, homework help, practice, and step-by-step learning.',['Homework help','Study sessions','Explanations']],
-images:['IMAGES','Describe what you imagine and NELLY can turn the idea into a visual.',['Image generation','Creative concepts','Visual exploration']],
-files:['FILES','Bring documents and files into the conversation for analysis and creation.',['Summarize files','Analyze documents','Create from files']],
-web:['WEB','Research questions and explore information when fresh or external context is needed.',['Research','Current information','Source-based answers']],
-settings:['SETTINGS','Tune the NELLY experience, voice, appearance, language behavior, and system preferences.',['Voice & language','Appearance','Preferences']]
-};
-function openModule(key){const d=data[key];document.getElementById('viewTitle').textContent=d[0];document.getElementById('viewDesc').textContent=d[1];document.getElementById('viewGrid').innerHTML=d[2].map(x=>`<div class="card"><strong>${x}</strong><div>Ready to connect this capability to NELLY's real AI services.</div></div>`).join('');document.getElementById('moduleView').classList.add('show')}
-function closeModule(){document.getElementById('moduleView').classList.remove('show')}
-function setState(title,sub){document.getElementById('stateTitle').textContent=title;document.getElementById('stateSub').textContent=sub;document.getElementById('currentState').textContent=title==='READY'?'NELLY is ready for you.':`NELLY is ${title.toLowerCase()}.`}
-function addMsg(who,text){const c=document.getElementById('chat');const m=document.createElement('div');m.className='msg'+(who==='YOU'?' user':'');m.innerHTML=`<div class="tag">${who}</div>${text}`;c.appendChild(m);while(c.children.length>4)c.removeChild(c.firstChild)}
-function demo(text){document.getElementById('input').value=text;send()}
-function detectLanguage(text){
-  const es=/[¿¡]|\b(qué|que|cómo|como|cuándo|cuando|dónde|donde|por qué|porque|para|necesito|quiero|puedes|ayuda|hola|gracias|entrenamiento|comida|tarea|gimnasio|hacer|dime|cuánto|cuanto|debería|deberia|quieres|tienes|está|esta|estoy|soy|mi|me|te|con|una|uno|los|las|el|la)\b/i;
-  return es.test(text)?'es':'en';
-}
-let lastLanguage='en';
-  document.getElementById('input').addEventListener('keydown', function(event){
-  if(event.key === 'Enter'){
-    event.preventDefault();
-    send();
-  }
-});
-function setLanguage(lang){
-  lastLanguage=lang;
-  document.getElementById('langStatus').textContent=lang==='es'?'ES · LATAM':'EN · US';
-}
-
-function speak(text,lang){
-  if(!('speechSynthesis' in window)) return;
-
-  window.speechSynthesis.cancel();
-
-  const spokenText = text
-    .replace(/https?:\/\/[^\s)]+/gi,'')
-    .replace(/https?:\/\//gi,'')
-    .replace(/www\.[^\s)]+/gi,'')
-    .replace(/\*\*/g,'')
-    .replace(/\*/g,'')
-    .replace(/#{1,6}\s?/g,'')
-    .replace(/\s{2,}/g,' ')
-    .trim();
-
-  const u=new SpeechSynthesisUtterance(spokenText);
-
-  const voices=window.speechSynthesis.getVoices();
-
-  if(lang==='es'){
-    u.lang='es-MX';
-
-    const preferred=
-      voices.find(v=>/^es-MX$/i.test(v.lang)) ||
-      voices.find(v=>/^es-US$/i.test(v.lang)) ||
-      voices.find(v=>/^es-/i.test(v.lang));
-
-    if(preferred) u.voice=preferred;
-
-  }else{
+cc
     u.lang='en-US';
 
     const preferred=
@@ -146,12 +84,6 @@ function speak(text,lang){
   window.speechSynthesis.speak(u);
 }
 
-  u.onend=()=>{
-    setState('READY','SPEAK OR TYPE TO NELLY');
-  };
-
-  window.speechSynthesis.speak(u);
-}
   
 
 let conversation=[];
