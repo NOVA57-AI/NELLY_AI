@@ -85,7 +85,7 @@ cc
 }
 
   
-
+const mic=document.getElementById('mic'); let recognition=null; if('webkitSpeechRecognition' in window || 'SpeechRecognition' in window){ const SpeechRecognition=window.SpeechRecognition || window.webkitSpeechRecognition; recognition=new SpeechRecognition(); recognition.continuous=false; recognition.interimResults=false; recognition.lang='en-US'; recognition.onstart=()=>{ mic.classList.add('listening'); setState('LISTENING','I\'M LISTENING...'); }; recognition.onresult=(event)=>{ const text=event.results[0][0].transcript; document.getElementById('input').value=text; mic.classList.remove('listening'); send(); }; recognition.onerror=(event)=>{ console.error('NELLY microphone error:',event.error); mic.classList.remove('listening'); setState('READY','SPEAK OR TYPE TO NELLY'); }; recognition.onend=()=>{ mic.classList.remove('listening'); }; mic.addEventListener('click',()=>{ recognition.lang=lastLanguage==='es'?'es-US':'en-US'; recognition.start(); }); }
 let conversation=[];
 
 
